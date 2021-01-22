@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="io.github.gargparthb.MainTest" time="0.029" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="io.github.gargparthb.MainTest" time="0.033" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/pgarg/Documents/GitHub/image-processing-software/target/surefire/surefirebooter1686013791159438186.jar /Users/pgarg/Documents/GitHub/image-processing-software/target/surefire 2021-01-21T17-14-24_174-jvmRun1 surefire829324171884323343tmp surefire_07560063637255669173tmp"/>
+    <property name="sun.java.command" value="/Users/pgarg/Documents/GitHub/image-processing-software/target/surefire/surefirebooter4843768252080735947.jar /Users/pgarg/Documents/GitHub/image-processing-software/target/surefire 2021-01-21T19-40-47_689-jvmRun1 surefire1755028792935220163tmp surefire_01825977676630427165tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/pgarg/Documents/GitHub/image-processing-software/target/test-classes:/Users/pgarg/Documents/GitHub/image-processing-software/target/classes:/Users/pgarg/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.6.3/junit-jupiter-api-5.6.3.jar:/Users/pgarg/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/Users/pgarg/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/pgarg/.m2/repository/org/junit/platform/junit-platform-commons/1.6.3/junit-platform-commons-1.6.3.jar:/Users/pgarg/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.6.3/junit-jupiter-engine-5.6.3.jar:/Users/pgarg/.m2/repository/org/junit/platform/junit-platform-engine/1.6.3/junit-platform-engine-1.6.3.jar:/Users/pgarg/.m2/repository/info/picocli/picocli/4.6.1/picocli-4.6.1.jar:"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/Users/pgarg/Documents/GitHub/image-processing-software/target/surefire/surefirebooter1686013791159438186.jar"/>
+    <property name="surefire.real.class.path" value="/Users/pgarg/Documents/GitHub/image-processing-software/target/surefire/surefirebooter4843768252080735947.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="14.0.2+12-46"/>
