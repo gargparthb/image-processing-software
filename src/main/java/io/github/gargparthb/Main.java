@@ -23,10 +23,11 @@ public class Main {
           description = "edit the given image(s)",
           version = "1.0.0",
           mixinStandardHelpOptions = true)
-  public void run(@Parameters(paramLabel = "main image") File img) {
+  public void run(@Parameters(paramLabel = "main image") File img,
+                  @Option(names = {"-b", "--brightness"}, description = "light multiplier", defaultValue = "0.0") double b) {
     try {
       // starts the editor
-      ImageEditor editor = new ImageEditor(img);
+      ImageEditor editor = new ImageEditor(img, b);
       editor.edit();
 
       System.out.println(Ansi.AUTO.string("@|bold,green Image Processed!|@"));

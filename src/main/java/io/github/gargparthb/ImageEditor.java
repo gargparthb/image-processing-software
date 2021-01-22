@@ -10,8 +10,11 @@ import java.io.IOException;
 public class ImageEditor {
   BufferedImage img;
 
-  ImageEditor(File img) throws IOException {
+  double brightnessScalar;
+
+  ImageEditor(File img, Double b) throws IOException {
     this.img = ImageIO.read(img);
+    this.brightnessScalar = b;
   }
 
   // main editing method
