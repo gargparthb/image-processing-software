@@ -24,12 +24,13 @@ public class Main {
           version = "1.0.0",
           mixinStandardHelpOptions = true)
   public void run(@Parameters(paramLabel = "main image") File img,
-                  @Option(names = {"-b", "--brightness"}, description = "light multiplier", defaultValue = "0.0") double b) {
+                  @Option(names = {"-b", "--brightness"}, description = "light multiplier between -1.0 and 1.0", defaultValue = "0.0") double b) {
     try {
       // starts the editor
       ImageEditor editor = new ImageEditor(img, b);
       editor.edit();
 
+      // UI messages
       System.out.println(Ansi.AUTO.string("@|bold,green Image Processed!|@"));
     } catch (IOException e) {
       System.out.println(Ansi.AUTO.string("@|bold,red fatal: Invalid Path|@"));
