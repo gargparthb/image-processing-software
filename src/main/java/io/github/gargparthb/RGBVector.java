@@ -15,10 +15,15 @@ public class RGBVector implements IColorVector {
     this(v, v, v);
   }
 
-  public Color applyTo(Color base) {
-    return new Color(
-            (int) Math.min(255.0, this.r * base.getRed()),
-            (int) Math.min(255.0, this.g * base.getGreen()),
-            (int) Math.min(255.0, this.b * base.getBlue()));
+  public Color sum(Color other) {
+    double newRed = this.r + other.getRed();
+    double newGreen = this.g + other.getGreen();
+    double newBlue = this.b + other.getBlue();
+    RGBVector vec = new RGBVector(newRed, newGreen, newBlue);
+    return vec.toColor();
+  }
+
+  public Color toColor() {
+    return new Color(ColorUtils.truncate(this.r), ColorUtils.truncate(this.g), ColorUtils.truncate(this.b));
   }
 }

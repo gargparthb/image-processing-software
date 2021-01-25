@@ -30,7 +30,7 @@ public class Main {
     try {
 
       // starts the editor
-      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier);
+      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult);
       editor.edit();
 
       // UI messages
