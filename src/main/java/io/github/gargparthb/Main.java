@@ -28,11 +28,12 @@ public class Main {
                   @Option(names = {"-b", "--brightness"}, description = "light multiplier between -1.0 and 1.0", defaultValue = "0.0") double lightMultiplier,
                   @Option(names = {"-hl", "--highlights"}, description = "light multiplier for the lighter parts of image", defaultValue = "0.0") double highlightsMult,
                   @Option(names = {"-s", "--shadows"}, description = "light multiplier for the shadow of image", defaultValue = "0.0") double shadowMult,
-                  @Option(names = {"-c", "--contrast"}, description = "multiplier for contrast adjustment", defaultValue = "0.0") double contrast) {
+                  @Option(names = {"-c", "--contrast"}, description = "multiplier for contrast adjustment", defaultValue = "0.0") double contrast,
+                  @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale) {
     try {
 
       // starts the editor
-      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast);
+      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale);
       editor.edit();
 
       // UI messages

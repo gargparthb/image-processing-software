@@ -11,9 +11,15 @@ class ColorUtilsTest {
 
   @Test
   @DisplayName("tests the light level calculation")
+  void grayScaleValue() {
+    assertEquals(ColorUtils.grayScaleValue(new Color(0, 0, 0)), 0.0);
+    assertEquals(ColorUtils.grayScaleValue(new Color(255, 157, 157)), 0.73, 0.05);
+  }
+
+  @Test
+  @DisplayName("calculates the grayscale color")
   void toGrayScale() {
-    assertEquals(ColorUtils.toGrayScale(new Color(0, 0, 0)), 0.0);
-    assertEquals(ColorUtils.toGrayScale(new Color(255, 157, 157)), 0.73, 0.05);
+    assertEquals(ColorUtils.toGrayScale(new Color(144, 203, 120)), new Color(175, 175, 175));
   }
 
   @Test

@@ -18,18 +18,22 @@ class ImageEditor {
 
   double contrastScalar;
 
+  boolean grayscale;
+
   ImageEditor(Path img,
               String outName,
               double brightnessScalar,
               double highlightScalar,
               double shadowScalar,
-              double contrastScalar) throws IOException {
+              double contrastScalar,
+              boolean grayscale) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
     this.brightnessScalar = validateRange(brightnessScalar);
     this.highlightScalar = validateRange(highlightScalar);
     this.shadowScalar = validateRange(shadowScalar);
     this.contrastScalar = contrastScalar;
+    this.grayscale = grayscale;
   }
 
   // main editing method
@@ -44,6 +48,11 @@ class ImageEditor {
 
         // adds brightness factor to the color
         Color brightnessApplied = this.brightenedColor(contrastApplied);
+
+        // adds the grayscale maybe
+        if(this.grayscale) {
+          brightnessApplied = ColorUtils.toGrayScale(brightnessApplied);
+        }
 
         this.img.setRGB(i, j, brightnessApplied.getRGB());
       }
@@ -99,7 +108,7 @@ class ImageEditor {
   public Color brightenedColor(Color base) {
     // accumulates all the transformations
     double totalLightAdjustment = this.brightnessScalar;
-    double grayscale = ColorUtils.toGrayScale(base);
+    double grayscale = ColorUtils.grayScaleValue(base);
 
     if (grayscale >= 0.75) {
       totalLightAdjustment += this.highlightScalar;
