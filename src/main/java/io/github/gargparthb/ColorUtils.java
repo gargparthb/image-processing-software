@@ -1,7 +1,6 @@
 package io.github.gargparthb;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ColorUtils {
   //  turns the given RGB color into a grayscale percentage
