@@ -20,8 +20,9 @@ class ImageEditor {
 
   boolean grayscale;
 
-  double temperature;
-  double tint;
+  double temperature, tint;
+
+  double saturation;
 
   ImageEditor(Path img,
               String outName,
@@ -31,7 +32,8 @@ class ImageEditor {
               double contrastScalar,
               boolean grayscale,
               double temperature,
-              double tint) throws IOException {
+              double tint,
+              double saturation) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
     this.brightnessScalar = validateRange(brightnessScalar);
@@ -41,6 +43,7 @@ class ImageEditor {
     this.grayscale = grayscale;
     this.temperature = validateRange(temperature);
     this.tint = validateRange(tint);
+    this.saturation = validateRange(saturation);
   }
 
   // testing constructor
@@ -85,6 +88,11 @@ class ImageEditor {
         // changes temperature
         if(temper.getAlpha() != 0) {
           currentCol = ColorUtils.composeOver(currentCol, temper);
+        }
+
+        // saturation
+        if(this.saturation != 0) {
+          currentCol = ColorUtils.saturate(currentCol, 1 + this.saturation);
         }
 
         this.img.setRGB(i, j, currentCol.getRGB());

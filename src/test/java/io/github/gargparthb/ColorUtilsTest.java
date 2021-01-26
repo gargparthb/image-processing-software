@@ -39,4 +39,10 @@ class ColorUtilsTest {
 
     assertEquals(ColorUtils.composeOver(c2, c1), new Color(115, 107, 138));
   }
+
+  @Test
+  @DisplayName("testing saturation")
+  void testSaturation() {
+    assertEquals(ColorUtils.saturate(new Color(50, 168, 82), 1.5), new Color(0, 168, 46));
+  }
 }

@@ -31,10 +31,11 @@ public class Main {
                   @Option(names = {"-c", "--contrast"}, description = "multiplier for contrast adjustment", defaultValue = "0.0") double contrast,
                   @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale,
                   @Option(names = {"-temp", "--temperature"}, description = "gives a red/blue overlay to image", defaultValue = "0.0") double temp,
-                  @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint) {
+                  @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint,
+                  @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation) {
     try {
       // starts the editor
-      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale, temp, tint);
+      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale, temp, tint, saturation);
       editor.edit();
 
       // UI messages

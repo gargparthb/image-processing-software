@@ -22,6 +22,7 @@ public class ColorUtils {
     return (int) Math.min(255.0, Math.max(0.0, d));
   }
 
+  // mixes the color with PD over operator
   public static Color composeOver(Color under, Color over) {
     double overAlpha = over.getAlpha() / 255.0;
 
@@ -30,5 +31,13 @@ public class ColorUtils {
     RGBVector col = source.sum(destination);
 
     return col.toColor();
+  }
+
+  // saturates the given color given a factor
+  public static Color saturate(Color base, double factor) {
+    float[] HSV = Color.RGBtoHSB(base.getRed(), base.getGreen(), base.getBlue(), null);
+    return Color.getHSBColor(HSV[0],
+            (float) Math.min(1.0, Math.max(0.0, HSV[1] * factor)),
+            HSV[2]);
   }
 }
