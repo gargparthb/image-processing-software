@@ -20,42 +20,76 @@ class ImageEditor {
 
   boolean grayscale;
 
+  double temperature;
+  double tint;
+
   ImageEditor(Path img,
               String outName,
               double brightnessScalar,
               double highlightScalar,
               double shadowScalar,
               double contrastScalar,
-              boolean grayscale) throws IOException {
+              boolean grayscale,
+              double temperature,
+              double tint) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
     this.brightnessScalar = validateRange(brightnessScalar);
     this.highlightScalar = validateRange(highlightScalar);
     this.shadowScalar = validateRange(shadowScalar);
+    this.contrastScalar = validateRange(contrastScalar);
+    this.grayscale = grayscale;
+    this.temperature = validateRange(temperature);
+    this.tint = validateRange(tint);
+  }
+
+  // testing constructor
+  // no IO operations
+  ImageEditor(double brightnessScalar, double highlightScalar, double shadowScalar, double contrastScalar, boolean grayscale, double temperature, double tint) {
+    this.brightnessScalar = brightnessScalar;
+    this.highlightScalar = highlightScalar;
+    this.shadowScalar = shadowScalar;
     this.contrastScalar = contrastScalar;
     this.grayscale = grayscale;
+    this.temperature = temperature;
+    this.tint = tint;
   }
 
   // main editing method
   public void edit() throws IOException {
+
+    Color tinter = this.getSpectrumColor(new Color(255, 0, 255), new Color(0, 255, 0), this.tint);
+    Color temper = this.getSpectrumColor(new Color(255, 0, 0), new Color(0, 0, 255), this.temperature);
+
     // loops through the colors of each pixel in the image
     for (int i = 0; i < this.img.getWidth(); i++) {
       for (int j = 0; j < this.img.getHeight(); j++) {
         Color currentCol = new Color(this.img.getRGB(i, j), true);
 
         // Light(pixel) = Contrast * Color + Brightness
-        Color contrastApplied = this.contrastedColor(currentCol);
+        currentCol = this.contrastedColor(currentCol);
 
         // adds brightness factor to the color
-        Color brightnessApplied = this.brightenedColor(contrastApplied);
+        currentCol = this.brightenedColor(currentCol);
 
         // adds the grayscale maybe
         if(this.grayscale) {
-          brightnessApplied = ColorUtils.toGrayScale(brightnessApplied);
+          currentCol = ColorUtils.toGrayScale(currentCol);
         }
 
-        this.img.setRGB(i, j, brightnessApplied.getRGB());
+        // applies the tint
+        if(tinter.getAlpha() != 0) {
+          currentCol = ColorUtils.composeOver(currentCol, tinter);
+        }
+
+        // changes temperature
+        if(temper.getAlpha() != 0) {
+          currentCol = ColorUtils.composeOver(currentCol, temper);
+        }
+
+        this.img.setRGB(i, j, currentCol.getRGB());
       }
+
     }
 
     ImageIO.write(img, "jpg", this.output);
@@ -120,5 +154,16 @@ class ImageEditor {
     RGBVector brightnessTransformation = new RGBVector(255 * totalLightAdjustment);
 
     return brightnessTransformation.sum(base);
+  }
+
+  // calculates the spectrum color between c1 and c2
+  public Color getSpectrumColor(Color c1, Color c2, double val) {
+    if(val > 0) {
+      return new Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (int) (255 * val));
+    } else if (val < 0) {
+      return new Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (int) Math.abs(255 * val));
+    } else {
+      return new Color(0,0,0,0);
+    }
   }
 }

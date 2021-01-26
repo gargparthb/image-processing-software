@@ -30,4 +30,13 @@ class ColorUtilsTest {
     assertEquals(ColorUtils.truncate(-54.4), 0);
     assertEquals(ColorUtils.truncate(43.3), 43);
   }
+
+  @Test
+  @DisplayName("tests the over operator")
+  void testComposeOver() {
+    Color c1 = new Color(68, 160, 100, 153);
+    Color c2 = new Color(186, 29, 195);
+
+    assertEquals(ColorUtils.composeOver(c2, c1), new Color(115, 107, 138));
+  }
 }

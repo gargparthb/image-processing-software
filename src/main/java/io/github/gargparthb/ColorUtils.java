@@ -1,8 +1,6 @@
 package io.github.gargparthb;
 
 import java.awt.*;
-import java.nio.file.Path;
-
 public class ColorUtils {
   // turns the given RGB color into a grayscale percentage
   public static double grayScaleValue(Color color) {
@@ -22,5 +20,15 @@ public class ColorUtils {
   // turns the double into a color valid value
   public static int truncate(double d) {
     return (int) Math.min(255.0, Math.max(0.0, d));
+  }
+
+  public static Color composeOver(Color under, Color over) {
+    double overAlpha = over.getAlpha() / 255.0;
+
+    RGBVector source = new RGBVector(over).product(new RGBVector(overAlpha));
+    RGBVector destination = new RGBVector(under).product(new RGBVector(1 - overAlpha));
+    RGBVector col = source.sum(destination);
+
+    return col.toColor();
   }
 }

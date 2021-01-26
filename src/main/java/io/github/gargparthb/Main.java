@@ -29,11 +29,12 @@ public class Main {
                   @Option(names = {"-hl", "--highlights"}, description = "light multiplier for the lighter parts of image", defaultValue = "0.0") double highlightsMult,
                   @Option(names = {"-s", "--shadows"}, description = "light multiplier for the shadow of image", defaultValue = "0.0") double shadowMult,
                   @Option(names = {"-c", "--contrast"}, description = "multiplier for contrast adjustment", defaultValue = "0.0") double contrast,
-                  @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale) {
+                  @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale,
+                  @Option(names = {"-temp", "--temperature"}, description = "gives a red/blue overlay to image", defaultValue = "0.0") double temp,
+                  @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint) {
     try {
-
       // starts the editor
-      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale);
+      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale, temp, tint);
       editor.edit();
 
       // UI messages
