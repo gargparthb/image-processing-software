@@ -2,7 +2,7 @@ package io.github.gargparthb;
 
 import java.awt.*;
 
-public class RGBVector {
+public class RGBVector implements IColorVector {
   double r, g, b;
 
   RGBVector(double r, double g, double b) {
@@ -11,21 +11,17 @@ public class RGBVector {
     this.b = b;
   }
 
-  RGBVector(double v) {
+  public RGBVector(double v) {
     this(v, v, v);
   }
 
-  RGBVector(Color color) {
+  public RGBVector(Color color) {
     this(color.getRed(), color.getGreen(), color.getBlue());
   }
 
   // adds the vector to color and converts to color
-  public Color sum(Color other) {
-    double newRed = this.r + other.getRed();
-    double newGreen = this.g + other.getGreen();
-    double newBlue = this.b + other.getBlue();
-    RGBVector vec = new RGBVector(newRed, newGreen, newBlue);
-    return vec.toColor();
+  public Color sumWithColor(Color other) {
+    return this.sum(new RGBVector(other)).toColor();
   }
 
   // sums two vectors
@@ -64,7 +60,7 @@ public class RGBVector {
 
   // vec -> color
   public Color toColor() {
-    return new Color(ColorUtils.truncate(this.r), ColorUtils.truncate(this.g), ColorUtils.truncate(this.b));
+    return new Color(ColorUtils.makeValidColorValue(this.r), ColorUtils.makeValidColorValue(this.g), ColorUtils.makeValidColorValue(this.b));
   }
 
   // equals method

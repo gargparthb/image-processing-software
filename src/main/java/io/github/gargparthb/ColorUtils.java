@@ -10,34 +10,24 @@ public class ColorUtils {
             0.114 * color.getBlue()) / 255;
   }
 
-  // generates the grayscale color from the given base
-  public static Color toGrayScale(Color base) {
-    double v = grayScaleValue(base);
-    RGBVector vec = new RGBVector(v * 255);
-    return vec.toColor();
+  // turns the double into a color valid value in the range [0, 255]
+  public static int makeValidColorValue(double d) {
+    return (int) truncate(0.0, 255.0, d);
   }
 
-  // turns the double into a color valid value
-  public static int truncate(double d) {
-    return (int) Math.min(255.0, Math.max(0.0, d));
+  // truncates in the given range
+  public static double truncate(double min, double max, double d) {
+    return Math.min(max, Math.max(min, d));
   }
 
-  // mixes the color with PD over operator
-  public static Color composeOver(Color under, Color over) {
-    double overAlpha = over.getAlpha() / 255.0;
-
-    RGBVector source = new RGBVector(over).product(new RGBVector(overAlpha));
-    RGBVector destination = new RGBVector(under).product(new RGBVector(1 - overAlpha));
-    RGBVector col = source.sum(destination);
-
-    return col.toColor();
-  }
-
-  // saturates the given color given a factor
-  public static Color saturate(Color base, double factor) {
-    float[] HSV = Color.RGBtoHSB(base.getRed(), base.getGreen(), base.getBlue(), null);
-    return Color.getHSBColor(HSV[0],
-            (float) Math.min(1.0, Math.max(0.0, HSV[1] * factor)),
-            HSV[2]);
+  // calculates the spectrum color between c1 and c2
+  public static Color getSpectrumColor(Color c1, Color c2, double val) {
+    if (val > 0) {
+      return new Color(c1.getRed(), c1.getGreen(), c1.getBlue(), (int) (255 * val));
+    } else if (val < 0) {
+      return new Color(c2.getRed(), c2.getGreen(), c2.getBlue(), (int) Math.abs(255 * val));
+    } else {
+      return new Color(0,0,0,0);
+    }
   }
 }

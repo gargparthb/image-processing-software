@@ -13,7 +13,7 @@ class RGBVectorTest {
   void testSum() {
     RGBVector vec = new RGBVector(65.3);
     Color col = new Color(165, 194, 255);
-    assertEquals(vec.sum(col), new Color(230, 255, 255));
+    assertEquals(vec.sumWithColor(col), new Color(230, 255, 255));
   }
 
   @Test

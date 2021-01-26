@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="io.github.gargparthb.Main" />
     <module name="image-processing-software" />
-    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Users\parth\OneDrive\Desktop\testing images\baboon.jpg&quot; -sat 0.8" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Users\parth\OneDrive\Desktop\testing images\baboon.jpg&quot; -g" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
