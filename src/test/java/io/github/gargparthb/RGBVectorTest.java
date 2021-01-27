@@ -34,4 +34,10 @@ class RGBVectorTest {
     assertEquals(vec.product(vec1).getB(), -529.48, 0.1);
   }
 
+  @Test
+  @DisplayName("tests to Color")
+  void testToColor() {
+    RGBVector vec = new RGBVector(45.4, 32.2, -2.3);
+    assertEquals(vec.toColor(), new Color(45, 32, 0));
+  }
 }

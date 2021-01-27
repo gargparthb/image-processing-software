@@ -30,4 +30,23 @@ public class ColorUtils {
       return new Color(0,0,0,0);
     }
   }
+
+  // returns the broad color classification, i.e. red, orange ...
+  public static String getColorType(Color color) {
+    double hue = 360 * Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null)[0];
+
+    if (hue > 345 || hue <= 15) return "red";
+    else if (onInterval(15, 45, hue)) return "orange";
+    else if (onInterval(45, 75, hue)) return "yellow";
+    else if (onInterval(75, 150, hue)) return "green";
+    else if (onInterval(150, 180, hue)) return "cyan";
+    else if (onInterval(180, 255, hue)) return "blue";
+    else if (onInterval(255, 285, hue)) return "purple";
+    else return "magenta";
+  }
+
+  // checks if the val in on the (] interval
+  public static boolean onInterval(int min, int max, double d) {
+    return d > min && d <= max;
+  }
 }

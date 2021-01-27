@@ -24,4 +24,18 @@ class ColorUtilsTest {
     assertEquals(ColorUtils.makeValidColorValue(-54.4), 0);
     assertEquals(ColorUtils.makeValidColorValue(43.3), 43);
   }
+
+  @Test
+  @DisplayName("tests the spectrum color calculation")
+  void testSpectrumColor() {
+    assertEquals(ColorUtils.getSpectrumColor(Color.RED, Color.BLUE, 0.4), new Color(255, 0, 0, 102));
+    assertEquals(ColorUtils.getSpectrumColor(Color.RED, Color.BLUE, -0.4), new Color(0, 0, 255, 102));
+  }
+
+  @Test
+  @DisplayName("tests the color classification")
+  void testColorClassification() {
+    assertEquals(ColorUtils.getColorType(new Color(0xFFCB07)), "yellow");
+    assertEquals(ColorUtils.getColorType(new Color(0xFF00FF)), "magenta");
+  }
 }

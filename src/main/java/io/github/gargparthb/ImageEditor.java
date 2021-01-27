@@ -10,11 +10,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 class ImageEditor {
   BufferedImage img;
 
   File output;
+
+  // creates a bunch of functional objects
 
   BrightnessEffect brightnessEffect;
 
@@ -26,6 +29,8 @@ class ImageEditor {
 
   SaturationEffect saturationEffect;
 
+  AdjustmentEffect hueAdjustments;
+
   ImageEditor(Path img,
               String outName,
               double brightnessScalar,
@@ -35,7 +40,8 @@ class ImageEditor {
               boolean grayscale,
               double temperatureScalar,
               double tintScalar,
-              double saturationScalar) throws IOException {
+              double saturationScalar,
+              HashMap<String, HSVVector> hueAdjustments) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
 
@@ -52,6 +58,8 @@ class ImageEditor {
     this.tintEffect = new OverEffect(new Color(255, 0, 255), Color.GREEN, validateRange(tintScalar));
 
     this.saturationEffect = new SaturationEffect(validateRange(saturationScalar));
+
+    this.hueAdjustments = new AdjustmentEffect(hueAdjustments);
   }
 
   // main editing method
@@ -81,6 +89,9 @@ class ImageEditor {
 
         // saturation
         currentCol = this.saturationEffect.apply(currentCol);
+
+        // color adjustments
+        currentCol = this.hueAdjustments.apply(currentCol);
 
         this.img.setRGB(i, j, currentCol.getRGB());
       }

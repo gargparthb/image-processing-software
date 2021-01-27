@@ -9,12 +9,15 @@ import picocli.CommandLine.Help.Ansi;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
   public static void main(String[] args) {
     // points cmd args to the run method
     Method run = CommandLine.getCommandMethods(Main.class, "run").get(0);
     CommandLine cmd = new CommandLine(run);
+    cmd.registerConverter(HSVVector.class, HSVVector::new);
     cmd.execute(args);
   }
 
@@ -32,10 +35,22 @@ public class Main {
                   @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale,
                   @Option(names = {"-temp", "--temperature"}, description = "gives a red/blue overlay to image", defaultValue = "0.0") double temp,
                   @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint,
-                  @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation) {
+                  @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation,
+                  @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> adjustments) {
     try {
       // starts the editor
-      ImageEditor editor = new ImageEditor(img, outName, lightMultiplier, highlightsMult, shadowMult, contrast, grayscale, temp, tint, saturation);
+      ImageEditor editor = new ImageEditor(
+              img,
+              outName,
+              lightMultiplier,
+              highlightsMult,
+              shadowMult,
+              contrast,
+              grayscale,
+              temp,
+              tint,
+              saturation,
+              adjustments);
       editor.edit();
 
       // UI messages
