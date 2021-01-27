@@ -24,12 +24,14 @@ class ImageEditor {
   ContrastEffect contrastEffect;
 
   GrayScaleEffect grayScaleEffect;
+  InvertEffect invertEffect;
 
-  OverEffect temperatureEffect, tintEffect;
+  ColorFilterEffect temperatureEffect, tintEffect;
 
   SaturationEffect saturationEffect;
 
-  AdjustmentEffect hueAdjustments;
+  HueAdjustmentEffect hueAdjustments;
+  ToneAdjustmentEffect toneAdjustments;
 
   ImageEditor(Path img,
               String outName,
@@ -38,10 +40,12 @@ class ImageEditor {
               double shadowScalar,
               double contrastScalar,
               boolean grayscale,
+              boolean invert,
               double temperatureScalar,
               double tintScalar,
               double saturationScalar,
-              HashMap<String, HSVVector> hueAdjustments) throws IOException {
+              HashMap<String, HSVVector> hueAdjustments,
+              HashMap<String, HSVVector> toneAdjustments) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
 
@@ -53,13 +57,15 @@ class ImageEditor {
     this.contrastEffect = new ContrastEffect(validateRange(contrastScalar));
 
     this.grayScaleEffect = new GrayScaleEffect(grayscale);
+    this.invertEffect = new InvertEffect(invert);
 
-    this.temperatureEffect = new OverEffect(Color.RED, Color.BLUE, validateRange(temperatureScalar));
-    this.tintEffect = new OverEffect(new Color(255, 0, 255), Color.GREEN, validateRange(tintScalar));
+    this.temperatureEffect = new ColorFilterEffect(Color.RED, Color.BLUE, validateRange(temperatureScalar));
+    this.tintEffect = new ColorFilterEffect(new Color(255, 0, 255), Color.GREEN, validateRange(tintScalar));
 
     this.saturationEffect = new SaturationEffect(validateRange(saturationScalar));
 
-    this.hueAdjustments = new AdjustmentEffect(hueAdjustments);
+    this.hueAdjustments = new HueAdjustmentEffect(hueAdjustments);
+    this.toneAdjustments = new ToneAdjustmentEffect(toneAdjustments);
   }
 
   // main editing method
@@ -92,6 +98,10 @@ class ImageEditor {
 
         // color adjustments
         currentCol = this.hueAdjustments.apply(currentCol);
+        currentCol = this.toneAdjustments.apply(currentCol);
+
+        // invert should go last
+        currentCol = this.invertEffect.apply(currentCol);
 
         this.img.setRGB(i, j, currentCol.getRGB());
       }

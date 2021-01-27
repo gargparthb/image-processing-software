@@ -6,10 +6,10 @@ import io.github.gargparthb.HSVVector;
 import java.awt.*;
 import java.util.HashMap;
 
-public class AdjustmentEffect implements IEffect {
+public class HueAdjustmentEffect implements IEffect {
   HashMap<String, HSVVector> table;
 
-  public AdjustmentEffect(HashMap<String, HSVVector> table) {
+  public HueAdjustmentEffect(HashMap<String, HSVVector> table) {
     this.table = table;
   }
 

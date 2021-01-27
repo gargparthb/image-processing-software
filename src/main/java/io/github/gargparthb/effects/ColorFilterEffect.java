@@ -4,12 +4,18 @@ import io.github.gargparthb.ColorUtils;
 import io.github.gargparthb.RGBVector;
 
 import java.awt.*;
+import java.nio.file.Path;
 
-public class OverEffect implements IEffect {
+public class ColorFilterEffect implements IEffect {
   Color over;
 
-  public OverEffect(Color l, Color r, double val) {
-    this.over = ColorUtils.getSpectrumColor(l, r, val);
+  public ColorFilterEffect(Color over) {
+    this.over = over;
+  }
+
+  // generates the spectrum color
+  public ColorFilterEffect(Color l, Color r, double val) {
+    this(ColorUtils.getSpectrumColor(l, r, val));
   }
 
   public Color apply(Color in) {

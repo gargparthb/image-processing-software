@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
   public static void main(String[] args) {
@@ -33,10 +32,12 @@ public class Main {
                   @Option(names = {"-s", "--shadows"}, description = "light multiplier for the shadow of image", defaultValue = "0.0") double shadowMult,
                   @Option(names = {"-c", "--contrast"}, description = "multiplier for contrast adjustment", defaultValue = "0.0") double contrast,
                   @Option(names = {"-g", "--grayscale"}, description = "convert image to grayscale", defaultValue = "false") boolean grayscale,
+                  @Option(names = {"-i", "--invert"}, description = "inverts the image", defaultValue = "false") boolean invert,
                   @Option(names = {"-temp", "--temperature"}, description = "gives a red/blue overlay to image", defaultValue = "0.0") double temp,
                   @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint,
                   @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation,
-                  @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> adjustments) {
+                  @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> hueAdjustments,
+                  @Option(names = {"--tone-adjustments", "-ta"}, description = "make color adjustments based on the tone", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> toneAdjustments) {
     try {
       // starts the editor
       ImageEditor editor = new ImageEditor(
@@ -47,10 +48,12 @@ public class Main {
               shadowMult,
               contrast,
               grayscale,
+              invert,
               temp,
               tint,
               saturation,
-              adjustments);
+              hueAdjustments,
+              toneAdjustments);
       editor.edit();
 
       // UI messages

@@ -13,6 +13,7 @@ public class SaturationEffect implements IEffect {
 
   public Color apply(Color in) {
     HSVVector hsv = new HSVVector(in);
+    // maps to the new range
     return hsv.saturate(1 + this.scalar);
   }
 }

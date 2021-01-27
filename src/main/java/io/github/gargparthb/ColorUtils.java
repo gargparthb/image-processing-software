@@ -33,9 +33,11 @@ public class ColorUtils {
 
   // returns the broad color classification, i.e. red, orange ...
   public static String getColorType(Color color) {
-    double hue = 360 * Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null)[0];
+    float[] hsv = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
+    double hue = 360 * hsv[0];
 
-    if (hue > 345 || hue <= 15) return "red";
+    if(hsv[1] < 0.02) return "white";
+    else if (hue > 345 || hue <= 15) return "red";
     else if (onInterval(15, 45, hue)) return "orange";
     else if (onInterval(45, 75, hue)) return "yellow";
     else if (onInterval(75, 150, hue)) return "green";
@@ -48,5 +50,12 @@ public class ColorUtils {
   // checks if the val in on the (] interval
   public static boolean onInterval(int min, int max, double d) {
     return d > min && d <= max;
+  }
+
+  // gets the color tone by comparing grayscale
+  public static String getColorTone(Color color) {
+    if (ColorUtils.grayScaleValue(color) > 0.75) return "light";
+    else if (ColorUtils.grayScaleValue(color) < 0.25) return "dark";
+    return "mid";
   }
 }
