@@ -62,6 +62,8 @@ class ImageEditor {
       for (int j = 0; j < this.img.getHeight(); j++) {
         Color currentCol = new Color(this.img.getRGB(i, j), true);
 
+        // uses the effect functional interface to build on the same color.
+
         // Light(pixel) = Contrast * Color + Brightness
         currentCol = this.contrastEffect.apply(currentCol);
 
