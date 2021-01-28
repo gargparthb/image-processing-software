@@ -4,6 +4,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Help.Ansi;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class Main {
           description = "edit the given image(s)",
           version = "1.0.0",
           mixinStandardHelpOptions = true)
-  public void run(@Parameters(paramLabel = "main image") Path img,
+  public void run(@Parameters(paramLabel = "main image and any composite images") Path imgs,
                   @Option(names = {"-o", "--out"}, description = "out path", defaultValue = "") String outName,
                   @Option(names = {"-b", "--brightness"}, description = "light multiplier between -1.0 and 1.0", defaultValue = "0.0") double lightMultiplier,
                   @Option(names = {"-hl", "--highlights"}, description = "light multiplier for the lighter parts of image", defaultValue = "0.0") double highlightsMult,
@@ -39,11 +40,13 @@ public class Main {
                   @Option(names = {"-tint", "--tint"}, description = "gives a green/purple tint to image", defaultValue = "0.0") double tint,
                   @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation,
                   @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> hueAdjustments,
-                  @Option(names = {"--tone-adjustments", "-ta"}, description = "make color adjustments based on the tone", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> toneAdjustments) {
+                  @Option(names = {"--tone-adjustments", "-ta"}, description = "make color adjustments based on the tone", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> toneAdjustments,
+                  @ArgGroup(exclusive = false) Composition overConfig) {
     try {
+
       // starts the editor
       ImageEditor editor = new ImageEditor(
-              img,
+              imgs,
               outName,
               lightMultiplier,
               highlightsMult,
@@ -57,7 +60,8 @@ public class Main {
               tint,
               saturation,
               hueAdjustments,
-              toneAdjustments);
+              toneAdjustments,
+              overConfig);
       editor.edit();
 
       // UI messages

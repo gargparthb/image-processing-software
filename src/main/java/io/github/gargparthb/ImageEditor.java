@@ -1,8 +1,10 @@
 package io.github.gargparthb;
 
 import io.github.gargparthb.effects.*;
+import picocli.CommandLine;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.Option;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,6 +38,8 @@ class ImageEditor {
   HueAdjustmentEffect hueAdjustments;
   ToneAdjustmentEffect toneAdjustments;
 
+  Composition overConfig;
+
   ImageEditor(Path img,
               String outName,
               double brightnessScalar,
@@ -50,7 +54,8 @@ class ImageEditor {
               double tintScalar,
               double saturationScalar,
               HashMap<String, HSVVector> hueAdjustments,
-              HashMap<String, HSVVector> toneAdjustments) throws IOException {
+              HashMap<String, HSVVector> toneAdjustments,
+              Composition overConfig) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
 
@@ -74,6 +79,8 @@ class ImageEditor {
 
     this.hueAdjustments = new HueAdjustmentEffect(hueAdjustments);
     this.toneAdjustments = new ToneAdjustmentEffect(toneAdjustments);
+
+    this.overConfig = overConfig;
   }
 
   // main editing method
@@ -120,6 +127,20 @@ class ImageEditor {
         this.img.setRGB(i, j, currentCol.getRGB());
       }
 
+    }
+
+    // checks to see if the image is there and should be composited
+    if(this.overConfig != null) {
+      BufferedImage overImage = ImageIO.read(this.overConfig.getImg().toFile());
+
+      for (int xBase = this.overConfig.getX(), xOver = 0; xBase < this.img.getWidth() && xOver < overImage.getWidth(); xBase++, xOver++) {
+        for (int yBase = this.overConfig.getY(), yOver = 0; yBase < this.img.getHeight() && yOver < overImage.getHeight(); yBase++, yOver++) {
+          Color base = new Color(this.img.getRGB(xBase, yBase), true);
+          Color over = new Color(overImage.getRGB(xOver, yOver), true);
+
+          this.img.setRGB(xBase, yBase, new ColorFilterEffect(over).apply(base).getRGB());
+        }
+      }
     }
 
     ImageIO.write(img, "jpg", this.output);
