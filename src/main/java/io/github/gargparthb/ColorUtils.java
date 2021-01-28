@@ -36,7 +36,8 @@ public class ColorUtils {
     float[] hsv = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
     double hue = 360 * hsv[0];
 
-    if(hsv[1] < 0.02) return "white";
+    if(hsv[1] < 0.1) return "white";
+    else if (hsv[2] < 0.1) return "black";
     else if (hue > 345 || hue <= 15) return "red";
     else if (onInterval(15, 45, hue)) return "orange";
     else if (onInterval(45, 75, hue)) return "yellow";

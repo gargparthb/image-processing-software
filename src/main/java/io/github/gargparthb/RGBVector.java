@@ -40,6 +40,14 @@ public class RGBVector implements IColorVector {
     return new RGBVector(newRed, newGreen, newBlue);
   }
 
+  // takes the vector to the given power
+  public RGBVector pow(double exp) {
+    double newRed = Math.pow(this.r, exp);
+    double newGreen = Math.pow(this.g, exp);
+    double newBlue = Math.pow(this.b, exp);
+    return new RGBVector(newRed, newGreen, newBlue);
+  }
+
   // Getters
   public double getR() {
     return r;

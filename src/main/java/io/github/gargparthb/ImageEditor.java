@@ -23,6 +23,8 @@ class ImageEditor {
 
   ContrastEffect contrastEffect;
 
+  GammaEffect gammaEffect;
+
   GrayScaleEffect grayScaleEffect;
   InvertEffect invertEffect;
   SepiaEffect sepiaEffect;
@@ -40,6 +42,7 @@ class ImageEditor {
               double highlightScalar,
               double shadowScalar,
               double contrastScalar,
+              double gammaScalar,
               boolean grayscale,
               boolean invert,
               boolean sepia,
@@ -57,6 +60,8 @@ class ImageEditor {
             validateRange(shadowScalar));
 
     this.contrastEffect = new ContrastEffect(validateRange(contrastScalar));
+
+    this.gammaEffect = new GammaEffect(validateRange(gammaScalar, 0.0, 7.0));
 
     this.grayScaleEffect = new GrayScaleEffect(grayscale);
     this.invertEffect = new InvertEffect(invert);
@@ -86,6 +91,9 @@ class ImageEditor {
 
         // adds brightness factor to the color
         currentCol = this.brightnessEffect.apply(currentCol);
+
+        // applies the gamma
+        currentCol = this.gammaEffect.apply(currentCol);
 
         // adds the grayscale maybe
         currentCol = this.grayScaleEffect.apply(currentCol);

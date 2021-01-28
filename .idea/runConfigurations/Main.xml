@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="io.github.gargparthb.Main" />
     <module name="image-processing-software" />
-    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Users\parth\OneDrive\Desktop\testing images\baboon.jpg&quot; -ta mid=(-0.2,0.2,0)" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;C:\Users\parth\OneDrive\Desktop\testing images\baboon.jpg&quot; --gamma 2.2" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
