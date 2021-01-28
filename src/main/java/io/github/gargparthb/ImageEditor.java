@@ -25,6 +25,7 @@ class ImageEditor {
 
   GrayScaleEffect grayScaleEffect;
   InvertEffect invertEffect;
+  SepiaEffect sepiaEffect;
 
   ColorFilterEffect temperatureEffect, tintEffect;
 
@@ -41,6 +42,7 @@ class ImageEditor {
               double contrastScalar,
               boolean grayscale,
               boolean invert,
+              boolean sepia,
               double temperatureScalar,
               double tintScalar,
               double saturationScalar,
@@ -58,6 +60,7 @@ class ImageEditor {
 
     this.grayScaleEffect = new GrayScaleEffect(grayscale);
     this.invertEffect = new InvertEffect(invert);
+    this.sepiaEffect = new SepiaEffect(sepia);
 
     this.temperatureEffect = new ColorFilterEffect(Color.RED, Color.BLUE, validateRange(temperatureScalar));
     this.tintEffect = new ColorFilterEffect(new Color(255, 0, 255), Color.GREEN, validateRange(tintScalar));
@@ -86,6 +89,9 @@ class ImageEditor {
 
         // adds the grayscale maybe
         currentCol = this.grayScaleEffect.apply(currentCol);
+
+        // maybe sepia
+        currentCol = this.sepiaEffect.apply(currentCol);
 
         // applies the tint
         currentCol = this.tintEffect.apply(currentCol);
