@@ -10,6 +10,7 @@ import picocli.CommandLine.Help.Ansi;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Main {
@@ -41,9 +42,9 @@ public class Main {
                   @Option(names = {"-sat", "--saturation"}, description = "saturation value", defaultValue = "0.0") double saturation,
                   @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> hueAdjustments,
                   @Option(names = {"--tone-adjustments", "-ta"}, description = "make color adjustments based on the tone", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> toneAdjustments,
-                  @ArgGroup(exclusive = false) Composition overConfig) {
+                  @ArgGroup(exclusive = false) Composition overConfig,
+                  @Option(names = {"-scale"}, description = "the scale value(s) for x and y respectively", defaultValue = "dummy=0") HashMap<String, Double> scales) {
     try {
-
       // starts the editor
       ImageEditor editor = new ImageEditor(
               imgs,
@@ -61,7 +62,8 @@ public class Main {
               saturation,
               hueAdjustments,
               toneAdjustments,
-              overConfig);
+              overConfig,
+              scales);
       editor.edit();
 
       // UI messages

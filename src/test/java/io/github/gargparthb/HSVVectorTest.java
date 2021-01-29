@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HSVVectorTest {
   HSVVector vec1 = new HSVVector(0.3778, 0.7, 0.66);
   HSVVector vec2 = new HSVVector(0.1, 0.4, 0.5);
+  HSVVector vec3 = new HSVVector(0.9, 0.7, 0.66);
 
   @Test
   @DisplayName("tests to color method")
@@ -30,6 +31,7 @@ class HSVVectorTest {
     assertEquals(vec1.apply(vec2).getH(), 0.41, 0.1);
     assertEquals(vec1.apply(vec2).getS(), 0.98, 0.1);
     assertEquals(vec1.apply(vec2).getV(), 0.99, 0.1);
+    assertEquals(vec3.apply(vec3), new HSVVector(0.71, 1.0, 1.0));
   }
 
   @Test

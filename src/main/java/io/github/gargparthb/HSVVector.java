@@ -43,7 +43,7 @@ public class HSVVector implements IColorVector {
   // applies a vector transformation to the given HSV
   public HSVVector apply(HSVVector transformation) {
     double appliedHue = this.h * (1 + transformation.h);
-    double newHue = appliedHue % ((int) appliedHue);
+    double newHue = appliedHue - Math.floor(appliedHue);
     double newSaturation = truncate(0.0, 1.0, this.s * (1 + transformation.s));
     double newVal = truncate(0.0, 1.0, this.v * (1 + transformation.v));
     return new HSVVector(newHue, newSaturation, newVal);

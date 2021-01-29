@@ -1,9 +1,12 @@
 package io.github.gargparthb;
 
 import io.github.gargparthb.effects.*;
+import io.github.gargparthb.transformations.ImageOverTransformation;
+import io.github.gargparthb.transformations.ScaleTransformation;
 import picocli.CommandLine;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor;
 import javax.swing.text.html.Option;
 
 import java.awt.*;
@@ -38,7 +41,9 @@ class ImageEditor {
   HueAdjustmentEffect hueAdjustments;
   ToneAdjustmentEffect toneAdjustments;
 
-  Composition overConfig;
+  ImageOverTransformation overTransformation;
+
+  ScaleTransformation scaleTransformation;
 
   ImageEditor(Path img,
               String outName,
@@ -55,7 +60,8 @@ class ImageEditor {
               double saturationScalar,
               HashMap<String, HSVVector> hueAdjustments,
               HashMap<String, HSVVector> toneAdjustments,
-              Composition overConfig) throws IOException {
+              Composition overConfig,
+              HashMap<String, Double> scales) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
 
@@ -66,7 +72,7 @@ class ImageEditor {
 
     this.contrastEffect = new ContrastEffect(validateRange(contrastScalar));
 
-    this.gammaEffect = new GammaEffect(validateRange(gammaScalar, 0.0, 7.0));
+    this.gammaEffect = new GammaEffect(validateRange(gammaScalar, 0.001, 7.0));
 
     this.grayScaleEffect = new GrayScaleEffect(grayscale);
     this.invertEffect = new InvertEffect(invert);
@@ -80,7 +86,11 @@ class ImageEditor {
     this.hueAdjustments = new HueAdjustmentEffect(hueAdjustments);
     this.toneAdjustments = new ToneAdjustmentEffect(toneAdjustments);
 
-    this.overConfig = overConfig;
+    this.overTransformation = new ImageOverTransformation(overConfig);
+
+    this.scaleTransformation = new ScaleTransformation(
+            validateRange(getScalar(scales, "x"), 0.001, 1000),
+            validateRange(getScalar(scales, "y"), 0.001, 1000));
   }
 
   // main editing method
@@ -129,21 +139,14 @@ class ImageEditor {
 
     }
 
-    // checks to see if the image is there and should be composited
-    if(this.overConfig != null) {
-      BufferedImage overImage = ImageIO.read(this.overConfig.getImg().toFile());
+    // over composition
+    this.img = this.overTransformation.apply(this.img);
 
-      for (int xBase = this.overConfig.getX(), xOver = 0; xBase < this.img.getWidth() && xOver < overImage.getWidth(); xBase++, xOver++) {
-        for (int yBase = this.overConfig.getY(), yOver = 0; yBase < this.img.getHeight() && yOver < overImage.getHeight(); yBase++, yOver++) {
-          Color base = new Color(this.img.getRGB(xBase, yBase), true);
-          Color over = new Color(overImage.getRGB(xOver, yOver), true);
+    // scale transformations
+    this.img = this.scaleTransformation.apply(this.img);
 
-          this.img.setRGB(xBase, yBase, new ColorFilterEffect(over).apply(base).getRGB());
-        }
-      }
-    }
 
-    ImageIO.write(img, "jpg", this.output);
+    ImageIO.write(this.img, "jpg", this.output);
   }
 
   // checks if the double is the given range
@@ -171,6 +174,20 @@ class ImageEditor {
     } else {
       newName = outName + currentName.substring(periodIdx);
     }
-    return new File(img.getParent().toFile(), newName);
+
+    // generates the file from the given name and directory
+    if (img.getNameCount() < 2) {
+      return new File(newName);
+    } else {
+      return new File(img.getParent().toFile(), newName);
+    }
+  }
+
+  // gets the given value from the hashmap
+  public static double getScalar(HashMap<String, Double> map, String axis) {
+    return map.getOrDefault(
+            "all",
+            map.getOrDefault(axis, 1.0)
+    );
   }
 }

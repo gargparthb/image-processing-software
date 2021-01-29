@@ -5,7 +5,7 @@ import picocli.CommandLine.Option;
 import java.nio.file.Path;
 
 public class Composition {
-  @Option(names = {"--over-image", "-over"}, description = "file for the over file", required = true, defaultValue = Option.NULL_VALUE)
+  @Option(names = {"--over-image", "-over"}, description = "file for the over file", required = true)
   Path img;
 
   @Option(names = "-x", description = "x position for composition", defaultValue = "0")

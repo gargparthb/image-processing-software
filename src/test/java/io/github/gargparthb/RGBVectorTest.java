@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.lang.annotation.Documented;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +33,13 @@ class RGBVectorTest {
     RGBVector vec1 = new RGBVector(-12.2);
 
     assertEquals(vec.product(vec1).getB(), -529.48, 0.1);
+  }
+
+  @Test
+  @DisplayName("tests the vector ^ exp method")
+  void testPOW() {
+    RGBVector vec = new RGBVector(3);
+    assertEquals(vec.pow(2), new RGBVector(9));
   }
 
   @Test
