@@ -43,7 +43,8 @@ public class Main {
                   @Option(names = {"--hue-adjustment", "-ha"}, description = "individual color adjustments", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> hueAdjustments,
                   @Option(names = {"--tone-adjustments", "-ta"}, description = "make color adjustments based on the tone", defaultValue = "dummy=(0,0,0)") HashMap<String, HSVVector> toneAdjustments,
                   @ArgGroup(exclusive = false) Composition overConfig,
-                  @Option(names = {"-scale"}, description = "the scale value(s) for x and y respectively", defaultValue = "dummy=0") HashMap<String, Double> scales) {
+                  @Option(names = {"-scale"}, description = "the scale value(s) for x and y respectively", defaultValue = "dummy=0") HashMap<String, Double> scales,
+                  @Option(names = {"-r", "--rotate"}, description = "rotate the image by the given angle", defaultValue = "0") int rotation) {
     try {
       // starts the editor
       ImageEditor editor = new ImageEditor(
@@ -63,7 +64,8 @@ public class Main {
               hueAdjustments,
               toneAdjustments,
               overConfig,
-              scales);
+              scales,
+              rotation);
       editor.edit();
 
       // UI messages

@@ -2,6 +2,7 @@ package io.github.gargparthb;
 
 import picocli.CommandLine.Option;
 
+import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 
 public class Composition {

@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="io.github.gargparthb.Main" />
     <module name="image-processing-software" />
-    <option name="PROGRAM_PARAMETERS" value="&quot;baboon.jpg&quot; -g --over-image &quot;Layer 1.png&quot; -scale all=1.3" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;baboon.jpg&quot; -r 89" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../testing images" />
     <method v="2">
       <option name="Make" enabled="true" />

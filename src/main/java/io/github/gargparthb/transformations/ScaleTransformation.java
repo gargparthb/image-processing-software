@@ -1,7 +1,6 @@
 package io.github.gargparthb.transformations;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class ScaleTransformation implements ITransformation {
   double scaleX, scaleY;
@@ -12,7 +11,7 @@ public class ScaleTransformation implements ITransformation {
   }
 
   public BufferedImage apply(BufferedImage in) {
-    if (this.scaleX != 1.0 && this.scaleY != 1.0) {
+    if (this.scaleX != 1.0 || this.scaleY != 1.0) {
       int newX = (int) (in.getWidth() * this.scaleX);
       int newY = (int) (in.getHeight() * this.scaleY);
 

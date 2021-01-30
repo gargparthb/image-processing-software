@@ -4,7 +4,6 @@ import io.github.gargparthb.ColorUtils;
 import io.github.gargparthb.RGBVector;
 
 import java.awt.*;
-import java.nio.file.Path;
 
 public class ColorFilterEffect implements IEffect {
   Color over;

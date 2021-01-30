@@ -2,16 +2,12 @@ package io.github.gargparthb;
 
 import io.github.gargparthb.effects.*;
 import io.github.gargparthb.transformations.ImageOverTransformation;
+import io.github.gargparthb.transformations.RotateTransformation;
 import io.github.gargparthb.transformations.ScaleTransformation;
-import picocli.CommandLine;
 
 import javax.imageio.ImageIO;
-import javax.print.DocFlavor;
-import javax.swing.text.html.Option;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -44,6 +40,7 @@ class ImageEditor {
   ImageOverTransformation overTransformation;
 
   ScaleTransformation scaleTransformation;
+  RotateTransformation rotateTransformation;
 
   ImageEditor(Path img,
               String outName,
@@ -61,7 +58,8 @@ class ImageEditor {
               HashMap<String, HSVVector> hueAdjustments,
               HashMap<String, HSVVector> toneAdjustments,
               Composition overConfig,
-              HashMap<String, Double> scales) throws IOException {
+              HashMap<String, Double> scales,
+              int rotation) throws IOException {
     this.img = ImageIO.read(img.toFile());
     this.output = generateOutputPath(img, outName);
 
@@ -91,6 +89,7 @@ class ImageEditor {
     this.scaleTransformation = new ScaleTransformation(
             validateRange(getScalar(scales, "x"), 0.001, 1000),
             validateRange(getScalar(scales, "y"), 0.001, 1000));
+    this.rotateTransformation = new RotateTransformation(rotation);
   }
 
   // main editing method
@@ -144,6 +143,9 @@ class ImageEditor {
 
     // scale transformations
     this.img = this.scaleTransformation.apply(this.img);
+
+    // rotation
+    this.img = this.rotateTransformation.apply(this.img);
 
 
     ImageIO.write(this.img, "jpg", this.output);
