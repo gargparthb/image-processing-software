@@ -6,7 +6,7 @@ import io.github.gargparthb.HSVVector;
 import java.awt.*;
 import java.util.HashMap;
 
-public class ToneAdjustmentEffect {
+public class ToneAdjustmentEffect implements IEffect {
   HashMap<String, HSVVector> table;
 
   public ToneAdjustmentEffect(HashMap<String, HSVVector> table) {
